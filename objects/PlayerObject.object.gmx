@@ -63,13 +63,15 @@ keyRight = keyboard_check(ord("D"))
 keyUp = keyboard_check(ord("W"))
 keyDown = keyboard_check(ord("S"))
 
-hsp = playerSpeed * ((-1 * keyLeft) + keyRight)
-vsp = playerSpeed * ((-1 * keyUp) + keyDown)
+hsp = (-1 * keyLeft) + keyRight
+vsp = (-1 * keyUp) + keyDown
 
-if hsp != 0 &amp;&amp; vsp != 0 {
-    hsp = round(hsp/sqrt(2))
-    vsp = round(vsp/sqrt(2))
+mag = sqrt(hsp*hsp + vsp*vsp)
+if mag > 0 {
+    hsp = round(playerSpeed * hsp/mag)
+    vsp = round(playerSpeed * vsp/mag)
 }
+//Round should always be the last operation on hsp and vsp
 
 if place_meeting(x + hsp, y, WallObject) {
     while(!place_meeting(x + sign(hsp), y, WallObject)) {
