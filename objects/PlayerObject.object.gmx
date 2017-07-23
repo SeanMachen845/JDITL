@@ -30,7 +30,7 @@
 playerSpeed = 4
 
 //Animations
-animationSpeed = 0.0666 // 4/60 = ~0.0666 (4 fps in a 60 fps room)
+animationDuration = 1 // seconds
 // Used to skip to the next animation frame on first movement.
 // Remove if animationSpeed ever becomes 1:1 with room speed
 firstMove = true
@@ -68,8 +68,13 @@ vsp = (-1 * keyUp) + keyDown
 
 mag = sqrt(hsp*hsp + vsp*vsp)
 if mag > 0 {
-    hsp = round(playerSpeed * hsp/mag)
-    vsp = round(playerSpeed * vsp/mag)
+    // Normalize direction and form velocity vector
+    hsp *= playerSpeed/mag
+    vsp *= playerSpeed/mag
+    
+    // Convert to integer
+    hsp = round(hsp)
+    vsp = round(vsp)
 }
 //Round should always be the last operation on hsp and vsp
 
@@ -77,6 +82,7 @@ if place_meeting(x + hsp, y, WallObject) {
     while(!place_meeting(x + sign(hsp), y, WallObject)) {
         x += sign(hsp)
     }
+    hsp = 0
 } else {
     x += hsp
 }
@@ -85,23 +91,26 @@ if place_meeting(x, y + vsp, WallObject) {
     while(!place_meeting(x, y + sign(vsp), WallObject)) {
         y += sign(vsp)
     }
+    vsp = 0
 } else {
     y += vsp
 }
 
+// Squareroot can be done later to find the Post collision speed, used for animations
+postCollideSpeed = sqrt(hsp*hsp + vsp*vsp)
+
 // Animations
-if hsp == 0 &amp;&amp; vsp == 0 {
+if postCollideSpeed == 0 {
     image_index = 0
     image_speed = 0
     firstMove = true
 } else {
-    // Hacky solution using bool as int to move one animation frame forward on first movement.
-    // This is so the player object doesn't look like it's sliding around
-    image_index = image_index + firstMove
-    firstMove = false
-
-    image_speed = animationSpeed
-
+    // Advances animation by one frame on first move to prevent moonwalking
+    if firstMove {
+        firstMove = false
+        image_index = 1
+    }
+    
     if vsp &gt; 0 {
         sprite_index = JesseDownSprite
     } else if vsp &lt; 0 {
@@ -110,6 +119,12 @@ if hsp == 0 &amp;&amp; vsp == 0 {
         sprite_index = JesseRightSprite
         image_xscale = sign(hsp)
     }
+    
+    // image_speed is in sprite frames / room frames
+    // animationDuration is in seconds, room_speed is in room frames per second
+    speedScale = postCollideSpeed / playerSpeed
+    image_speed = (speedScale * sprite_get_number(sprite_index)) / (animationDuration * room_speed)
+    
 }
 
 </string>
