@@ -7,21 +7,35 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprites name="Jesse">
-      <sprite>sprites\JesseUpSprite</sprite>
-      <sprite>sprites\JesseRightSprite</sprite>
-      <sprite>sprites\JesseDownSprite</sprite>
+      <sprite>sprites\Spr_JesseUp</sprite>
+      <sprite>sprites\Spr_JesseRight</sprite>
+      <sprite>sprites\Spr_JesseDown</sprite>
     </sprites>
-    <sprite>sprites\WallSprite</sprite>
+    <sprite>sprites\Spr_Wall</sprite>
+    <sprite>sprites\Spr_TalkBox</sprite>
+    <sprite>sprites\Spr_TextBox</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\text_box_create.gml</script>
+  </scripts>
+  <fonts name="fonts">
+    <font>fonts\Font_PGothic</font>
+  </fonts>
   <objects name="objects">
-    <object>objects\PlayerObject</object>
-    <object>objects\WallObject</object>
+    <object>objects\Obj_Player</object>
+    <object>objects\Obj_Wall</object>
+    <object>objects\Obj_TextBox</object>
+    <object>objects\Obj_TextBoxSpawner</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\TestRoom</room>
+    <room>rooms\Room_Test</room>
   </rooms>
+  <constants number="2">
+    <constant name="TEXT_COLOR">c_white</constant>
+    <constant name="TEXT_BOX_FONT">Font_PGothic</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>
