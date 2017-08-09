@@ -20,9 +20,9 @@
   <width>63</width>
   <height>84</height>
   <frames>
-    <frame index="0">images\JesseUpSprite_0.png</frame>
-    <frame index="1">images\JesseUpSprite_1.png</frame>
-    <frame index="2">images\JesseUpSprite_2.png</frame>
-    <frame index="3">images\JesseUpSprite_3.png</frame>
+    <frame index="0">images\Spr_JesseRight_0.png</frame>
+    <frame index="1">images\Spr_JesseRight_1.png</frame>
+    <frame index="2">images\Spr_JesseRight_2.png</frame>
+    <frame index="3">images\Spr_JesseRight_3.png</frame>
   </frames>
 </sprite>
