@@ -657,9 +657,11 @@
     <option_xbone_title_id></option_xbone_title_id>
   </Options>
   <ConfigConstants>
-    <constants number="2">
+    <constants number="4">
       <constant name="DEFAULT_COLOR">c_white</constant>
+      <constant name="TEXT_BOX_COLOR">c_white</constant>
       <constant name="DEFAULT_FONT">Font_PGothic</constant>
+      <constant name="TEXT_BOX_FONT">Font_PGothic</constant>
     </constants>
   </ConfigConstants>
 </Config>
