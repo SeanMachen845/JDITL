@@ -18,6 +18,8 @@
   <backgrounds name="background"/>
   <paths name="paths"/>
   <scripts name="scripts">
+    <script>scripts\pad_text_for_display.gml</script>
+    <script>scripts\split_string.gml</script>
     <script>scripts\text_box_create.gml</script>
   </scripts>
   <fonts name="fonts">
@@ -32,10 +34,6 @@
   <rooms name="rooms">
     <room>rooms\Room_Test</room>
   </rooms>
-  <constants number="2">
-    <constant name="TEXT_COLOR">c_white</constant>
-    <constant name="TEXT_BOX_FONT">Font_PGothic</constant>
-  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

@@ -28,6 +28,11 @@
             <string>time = 0
 textLength = 0
 print = ""
+boxPadding = 24 
+textSizeMultiplyer = 1.2 // Makes text bigger
+windowHeightPadding = 0.6
+
+maxWidth = (window_get_width() - boxPadding)
 show_debug_message("textboxObject_create")
 </string>
           </argument>
@@ -45,7 +50,7 @@ show_debug_message("textboxObject_create")
         <exetype>2</exetype>
         <functionname></functionname>
         <codestring></codestring>
-        <whoName>self</whoName>
+        <whoName>other</whoName>
         <relative>0</relative>
         <isnot>0</isnot>
         <arguments>
@@ -69,27 +74,24 @@ draw_sprite_stretched (
     Spr_TextBox,
     -1,
     0,
-    window_get_height() * 0.6,
+    window_get_height() * windowHeightPadding,
     window_get_width(),
-    window_get_height() * 0.4,
+    window_get_height() * (1 - windowHeightPadding),
 )
 
-boxPadding = 24 
-textRatioIncrease = 1.5 // scale to this much idk 
-
 draw_set_font(TEXT_BOX_FONT)
-draw_set_color(TEXT_COLOR)
+draw_set_color(TEXT_BOX_COLOR)
 texture_set_interpolation(true)
 
 fontSize = font_get_size(TEXT_BOX_FONT)
 draw_text_ext_transformed (
-    0  + boxPadding,
-    (window_get_height() * 0.6) + boxPadding,
+    boxPadding,
+    (window_get_height() * windowHeightPadding) + boxPadding,
     print,
-    (fontSize*1.5),
-    (window_get_width() - boxPadding) / textRatioIncrease,
-    textRatioIncrease,
-    textRatioIncrease,
+    (fontSize*textSizeMultiplyer),
+    maxWidth / textSizeMultiplyer,
+    textSizeMultiplyer,
+    textSizeMultiplyer,
     0 // angle
 )
 
