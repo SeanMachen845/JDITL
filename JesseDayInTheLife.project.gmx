@@ -14,6 +14,7 @@
     <sprite>sprites\Spr_Wall</sprite>
     <sprite>sprites\Spr_TalkBox</sprite>
     <sprite>sprites\Spr_TextBox</sprite>
+    <sprite>sprites\Spr_NPCPlaceholder</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -26,10 +27,14 @@
     <font>fonts\Font_PGothic</font>
   </fonts>
   <objects name="objects">
+    <objects name="Parents">
+      <object>objects\Par_TextBoxSpawner</object>
+      <object>objects\Par_Wall</object>
+    </objects>
     <object>objects\Obj_Player</object>
     <object>objects\Obj_Wall</object>
     <object>objects\Obj_TextBox</object>
-    <object>objects\Obj_TextBoxSpawner</object>
+    <object>objects\Obj_NPCPlaceholder</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\Room_Test</room>

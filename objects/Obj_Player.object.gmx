@@ -78,8 +78,8 @@ if mag &gt; 0 {
 }
 //Round should always be the last operation on hsp and vsp
 
-if place_meeting(x + hsp, y, Obj_Wall) {
-    while(!place_meeting(x + sign(hsp), y, Obj_Wall)) {
+if place_meeting(x + hsp, y, Par_Wall) {
+    while(!place_meeting(x + sign(hsp), y, Par_Wall)) {
         x += sign(hsp)
     }
     hsp = 0
@@ -87,8 +87,8 @@ if place_meeting(x + hsp, y, Obj_Wall) {
     x += hsp
 }
 
-if place_meeting(x, y + vsp, Obj_Wall) {
-    while(!place_meeting(x, y + sign(vsp), Obj_Wall)) {
+if place_meeting(x, y + vsp, Par_Wall) {
+    while(!place_meeting(x, y + sign(vsp), Par_Wall)) {
         y += sign(vsp)
     }
     vsp = 0
