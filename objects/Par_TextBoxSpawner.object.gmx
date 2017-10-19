@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>&lt;undefined&gt;</parentName>
+  <parentName>Par_Wall</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,7 +25,28 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>textBox = undefined
+            <string>// "He burnt my burger. He burnt my fries. He burnt my shake."
+// "It was a dark and stormy night Jesse was asking, whatever the single carrot will work probably I don't care this is a just a test of the automated voice anime system and am I here to just ask about death."
+// "Wow Joe, I can't believe you did that."
+
+// used for generating acceptible range for talking to an NPC
+xBuffer = sprite_width
+yBuffer = sprite_height
+x1 = x - xBuffer
+y1 = y - yBuffer
+x2 = x + xBuffer
+y2 = y + yBuffer
+
+// used for generating range in which you can walk around while still talking to an NPC
+keepAliverXBuffer = (2.5 * sprite_width)
+keepAliverYBuffer = (2.5 * sprite_height)
+keepAliveX1 = x - keepAliverXBuffer
+keepAliveY1 = y - keepAliverYBuffer
+keepAliveX2 = x + keepAliverXBuffer
+keepAliveY2 = y + keepAliverYBuffer
+
+textBox = undefined
+
 </string>
           </argument>
         </arguments>
@@ -50,25 +71,31 @@
             <kind>1</kind>
             <string>// Test text box spawner. Turn this into a parent object later.
 
-// "He burnt my burger. He burnt my fries. He burnt my shake."
-// "It was a dark and stormy night Jesse was asking, whatever the single carrot will work probably I don't care this is a just a test of the automated voice anime system and am I here to just ask about death."
-// "Wow Joe, I can't believe you did that."
-line = "i wonder if mermaids just have pruney fingertips all the time, also ariel from the little mermaid should take her bra off and fuck me"
-if mouse_check_button_released(mb_left) {
+if keyboard_check_pressed(vk_enter) {
+    // create textbox if no textbox exists and close enough to textbox spawner
     if textBox == undefined {
-        textBox = text_box_create(line, 0.5, mouse_x, mouse_y)
+        if collision_ellipse(x1, y1, x2, y2, Obj_Player, false, true) &amp;&amp; !instance_exists(Obj_TextBox) {
+            textBox = text_box_create(text, 0.5)
+        }
     } else {
         if instance_exists(textBox) {
             if textBox.time &gt;= textBox.textLength {
                 instance_destroy(textBox)
             } else {
+                // stop animating and complete text box
                 textBox.time = textBox.textLength - 1
             }
-        } else {
-            textBox = text_box_create(line, 0.5, mouse_x, mouse_y)
+        } else if collision_ellipse(x1, y1, x2, y2, Obj_Player, false, true) &amp;&amp; !instance_exists(Obj_TextBox) {
+            textBox = text_box_create(text, 0.5)
         }
     }
 }
+
+// Destroy textbox if player gets too far away
+if textBox != undefined &amp;&amp; instance_exists(textBox) &amp;&amp; !collision_ellipse(keepAliveX1, keepAliveY1, keepAliveX2, keepAliveY2, Obj_Player, false, true) {
+    instance_destroy(textBox)
+}
+
 </string>
           </argument>
         </arguments>
