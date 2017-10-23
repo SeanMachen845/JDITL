@@ -27,13 +27,28 @@
             <kind>1</kind>
             <string>// Player Variables
 //Movement
-playerSpeed = 4
+playerSpeed = 3
 
 //Animations
 animationDuration = 1 // seconds
 // Used to skip to the next animation frame on first movement.
 // Remove if animationSpeed ever becomes 1:1 with room speed
 firstMove = true
+
+//Combat
+maxStamina = 600
+stamina = maxStamina
+
+// defines how much higher sprint can go from walk speed (add 1 to get the multiplyer e.g.( 1 = x2, 2 = x3 ))
+sprintMultiplyerAddition = 1.25 // This makes it so sprint is slower if stamina is lower, but you can never drop below walk speed
+sprintStaminaDrain = 1.5
+walkStaminaRegen = 1
+restStaminaRegen = 2
+
+// HUD
+staminaBarAlpha = 0
+staminaBarAlphaDrain = 1/60 // 60 frames to completely disapear
+
 </string>
           </argument>
         </arguments>
@@ -63,20 +78,47 @@ keyRight = keyboard_check(ord("D"))
 keyUp = keyboard_check(ord("W"))
 keyDown = keyboard_check(ord("S"))
 
+keySprint = keyboard_check(vk_shift)
+
 hsp = (-1 * keyLeft) + keyRight
 vsp = (-1 * keyUp) + keyDown
 
+noBlockingWall = (!place_meeting(x + sign(hsp), y, Par_Wall) &amp;&amp; hsp != 0) || (!place_meeting(x, y + sign(vsp), Par_Wall) &amp;&amp; vsp != 0)
 mag = sqrt(hsp*hsp + vsp*vsp)
-if mag &gt; 0 {
+if mag &gt; 0 &amp;&amp; noBlockingWall {
     // Normalize direction and form velocity vector
-    hsp *= playerSpeed/mag
-    vsp *= playerSpeed/mag
-    
-    // Convert to integer
+    if keySprint &amp;&amp; stamina &gt;= sprintStaminaDrain {
+        // get speed multiplyer for sprinting
+        sprintMultiplyer = keySprint * (((stamina / maxStamina) * sprintMultiplyerAddition) + 1)
+
+        hsp *= (playerSpeed/mag) * sprintMultiplyer
+        vsp *= (playerSpeed/mag) * sprintMultiplyer
+
+        stamina -= sprintStaminaDrain
+    } else {
+        hsp *= playerSpeed/mag
+        vsp *= playerSpeed/mag
+        
+        if stamina &lt; maxStamina {
+            stamina += walkStaminaRegen
+            
+            if stamina &gt; maxStamina {
+                stamina = maxStamina
+            }
+        }
+    }
+
+    // Convert to integer [Round should always be the last operation on hsp and vsp]
     hsp = round(hsp)
     vsp = round(vsp)
+} else if stamina &lt; maxStamina {
+    stamina += restStaminaRegen
+
+    if stamina &gt; maxStamina {
+        stamina = maxStamina
+    }
 }
-//Round should always be the last operation on hsp and vsp
+
 
 if place_meeting(x + hsp, y, Par_Wall) {
     while(!place_meeting(x + sign(hsp), y, Par_Wall)) {
@@ -125,6 +167,57 @@ if postCollideSpeed == 0 {
     speedScale = postCollideSpeed / playerSpeed
     image_speed = (speedScale * sprite_get_number(sprite_index)) / (animationDuration * room_speed)
 }
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if stamina &lt; maxStamina {
+    staminaBarAlpha = 1
+} else if staminaBarAlpha &gt; 0 {
+    staminaBarAlpha -= staminaBarAlphaDrain
+    
+    if staminaBarAlpha &lt; 0 {
+        staminaBarAlpha = 0
+    }
+}
+
+draw_set_alpha(staminaBarAlpha)
+
+staminaRemainingPercentage = (stamina / maxStamina) * 100
+draw_healthbar(
+    40,
+    window_get_height() - 50,
+    300,
+    window_get_height() - 20,
+    staminaRemainingPercentage,
+    c_black,
+    c_green,
+    c_lime,
+    0, // drain left
+    true,
+    true
+)
+
+draw_set_alpha(1)
 
 </string>
           </argument>
