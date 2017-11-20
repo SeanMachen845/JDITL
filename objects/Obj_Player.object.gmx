@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Player Variables
+            <string>/// Movement and Animation
+
+// Player Variables
 //Movement
 playerSpeed = 3
 
@@ -53,6 +55,32 @@ staminaBarAlphaDrain = 1/60 // 60 frames to completely disapear
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Combat
+
+activeWeapon = undefined
+equippedWeapon = Obj_Stick
+xWeaponDisplacement = 0
+yWeaponDisplacement = 0
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="0">
       <action>
@@ -71,7 +99,9 @@ staminaBarAlphaDrain = 1/60 // 60 frames to completely disapear
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//Movement
+            <string>/// Movement and Animations
+
+// Movement
 // Get Player Input
 keyLeft = keyboard_check(ord("A"))
 keyRight = keyboard_check(ord("D"))
@@ -83,6 +113,7 @@ keySprint = keyboard_check(vk_shift)
 hsp = (-1 * keyLeft) + keyRight
 vsp = (-1 * keyUp) + keyDown
 
+// checks to see if there is a wall blocking the player's path
 noBlockingWall = (!place_meeting(x + sign(hsp), y, Par_Wall) &amp;&amp; hsp != 0) || (!place_meeting(x, y + sign(vsp), Par_Wall) &amp;&amp; vsp != 0)
 mag = sqrt(hsp*hsp + vsp*vsp)
 if mag &gt; 0 &amp;&amp; noBlockingWall {
@@ -168,6 +199,83 @@ if postCollideSpeed == 0 {
     image_speed = (speedScale * sprite_get_number(sprite_index)) / (animationDuration * room_speed)
 }
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Combat
+
+// Player Input
+keyEnter = keyboard_check_pressed(vk_enter)
+
+// Weapon Creation and Destruction
+if activeWeapon == undefined &amp;&amp; keyEnter {
+    if hsp == 0 &amp;&amp; vsp == 0 { // Jesse standing still
+        // currently only attacks left, right, up, and down when standing still
+        // add diagonal staning attacks once we get diagonal jesse sprites
+        switch sprite_index {
+            case Spr_JesseUp:
+                xWeaponDisplacement = 0
+                yWeaponDisplacement = -1 * (sprite_height/2)
+                break
+            case Spr_JesseDown:
+                xWeaponDisplacement = 0
+                yWeaponDisplacement = 1 * (sprite_height/2)
+                break
+            default:
+                xWeaponDisplacement = (sprite_width/2)
+                yWeaponDisplacement = 0
+                break
+        }
+    } else { // Jesse moving
+        if hsp != 0 {
+            xWeaponDisplacement = (sprite_width/2) * sign(hsp) * sign(image_xscale)
+        } else {
+            xWeaponDisplacement = 0
+        }
+
+        if vsp != 0 {
+            yWeaponDisplacement = (sprite_height/2) * sign(vsp)
+        } else {
+            yWeaponDisplacement = 0
+        }
+    }
+
+    // Create and place weapon object
+    activeWeapon = instance_create(x + xWeaponDisplacement, y + yWeaponDisplacement, equippedWeapon)
+    if xWeaponDisplacement != 0 {
+        activeWeapon.image_xscale = sign(xWeaponDisplacement)
+        activeWeapon.image_angle += (-90 * sign(yWeaponDisplacement)) * (.5 * sign(xWeaponDisplacement))
+    } else {
+        activeWeapon.image_angle += -90 * sign(yWeaponDisplacement)
+    }
+} else if activeWeapon != undefined {
+    with(activeWeapon) {
+        if image_index == (image_number - 1) { // Destroy weapon object on last frame of animation
+            instance_destroy()
+            other.activeWeapon = undefined
+        } else { // Move weapon object with player
+            x = other.x + other.xWeaponDisplacement
+            y = other.y + other.yWeaponDisplacement
+        }
+    }
+}
 </string>
           </argument>
         </arguments>
