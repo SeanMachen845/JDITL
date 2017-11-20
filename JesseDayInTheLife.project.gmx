@@ -11,6 +11,9 @@
       <sprite>sprites\Spr_JesseRight</sprite>
       <sprite>sprites\Spr_JesseDown</sprite>
     </sprites>
+    <sprites name="Weapons">
+      <sprite>sprites\Spr_StickPlaceholder</sprite>
+    </sprites>
     <sprite>sprites\Spr_Wall</sprite>
     <sprite>sprites\Spr_TalkBox</sprite>
     <sprite>sprites\Spr_TextBox</sprite>
@@ -30,6 +33,9 @@
     <objects name="Parents">
       <object>objects\Par_TextBoxSpawner</object>
       <object>objects\Par_Wall</object>
+    </objects>
+    <objects name="Weapons">
+      <object>objects\Obj_Stick</object>
     </objects>
     <object>objects\Obj_Player</object>
     <object>objects\Obj_Wall</object>
