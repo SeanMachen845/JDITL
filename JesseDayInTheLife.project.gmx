@@ -6,6 +6,10 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
+    <sprites name="Enemies">
+      <sprite>sprites\Spr_GreenSlime</sprite>
+      <sprite>sprites\Spr_PurpleSlime</sprite>
+    </sprites>
     <sprites name="Jesse">
       <sprite>sprites\Spr_JesseUp</sprite>
       <sprite>sprites\Spr_JesseRight</sprite>
@@ -30,9 +34,14 @@
     <font>fonts\Font_PGothic</font>
   </fonts>
   <objects name="objects">
+    <objects name="Enemies">
+      <object>objects\Obj_Slime</object>
+    </objects>
     <objects name="Parents">
       <object>objects\Par_TextBoxSpawner</object>
       <object>objects\Par_Wall</object>
+      <object>objects\Par_HurtEnemy</object>
+      <object>objects\Par_Enemy</object>
     </objects>
     <objects name="Weapons">
       <object>objects\Obj_Stick</object>

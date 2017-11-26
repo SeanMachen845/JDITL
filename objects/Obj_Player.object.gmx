@@ -25,32 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Movement and Animation
+            <string>/// Game Start
 
-// Player Variables
-//Movement
-playerSpeed = 3
-
-//Animations
-animationDuration = 1 // seconds
-// Used to skip to the next animation frame on first movement.
-// Remove if animationSpeed ever becomes 1:1 with room speed
-firstMove = true
-
-//Combat
-maxStamina = 600
-stamina = maxStamina
-
-// defines how much higher sprint can go from walk speed (add 1 to get the multiplyer e.g.( 1 = x2, 2 = x3 ))
-sprintMultiplyerAddition = 1.25 // This makes it so sprint is slower if stamina is lower, but you can never drop below walk speed
-sprintStaminaDrain = 1.5
-walkStaminaRegen = 1
-restStaminaRegen = 2
-
-// HUD
-staminaBarAlpha = 0
-staminaBarAlphaDrain = 1/60 // 60 frames to completely disapear
-
+// Set random randomization seed
+randomize()
 </string>
           </argument>
         </arguments>
@@ -77,6 +55,52 @@ activeWeapon = undefined
 equippedWeapon = Obj_Stick
 xWeaponDisplacement = 0
 yWeaponDisplacement = 0
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Movement and Animation
+
+// Player Variables
+//Movement
+playerSpeed = 3
+
+//Animations
+animationDuration = 1 // seconds
+// Used to skip to the next animation frame on first movement.
+// Remove if animationSpeed ever becomes 1:1 with room speed
+firstMove = true
+
+//Combat
+maxStamina = 600
+stamina = maxStamina
+
+// defines how much higher sprint can go from walk speed (add 1 to get the multiplyer e.g.( 1 = x2, 2 = x3 ))
+sprintMultiplyerAddition = 1.25 // This makes it so sprint is slower if stamina is lower, but you can never drop below walk speed
+sprintStaminaDrain = 1.5
+walkStaminaRegen = 1
+restStaminaRegen = 2
+
+// HUD
+staminaBarAlpha = 0
+staminaBarAlphaDrain = 1/60 // 60 frames to completely disapear
+
 </string>
           </argument>
         </arguments>
