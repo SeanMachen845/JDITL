@@ -61,6 +61,9 @@
     <instance objName="Obj_Wall" x="1150" y="250" name="inst_FC097EB0" locked="0" code="" scaleX="2" scaleY="2" colour="4294967295" rotation="0"/>
     <instance objName="Obj_Wall" x="700" y="150" name="inst_DF6E4DE0" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
     <instance objName="Obj_NPCPlaceholder" x="500" y="250" name="inst_A850AAEF" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Slime" x="200" y="500" name="inst_BC643997" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Slime" x="400" y="450" name="inst_75EAE5CB" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
+    <instance objName="Obj_Slime" x="500" y="350" name="inst_FE270681" locked="0" code="" scaleX="1" scaleY="1" colour="4294967295" rotation="0"/>
   </instances>
   <tiles/>
   <PhysicsWorld>0</PhysicsWorld>
