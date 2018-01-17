@@ -55,6 +55,7 @@ activeWeapon = undefined
 equippedWeapon = Obj_Stick
 xWeaponDisplacement = 0
 yWeaponDisplacement = 0
+attackStaminaDrain = 40
 </string>
           </argument>
         </arguments>
@@ -154,7 +155,8 @@ if mag &gt; 0 &amp;&amp; noBlockingWall {
         hsp *= playerSpeed/mag
         vsp *= playerSpeed/mag
         
-        if stamina &lt; maxStamina {
+        // do not gain stamina if stamina is full or currently attacking
+        if stamina &lt; maxStamina &amp;&amp; activeWeapon == undefined {
             stamina += walkStaminaRegen
             
             if stamina &gt; maxStamina {
@@ -166,7 +168,7 @@ if mag &gt; 0 &amp;&amp; noBlockingWall {
     // Convert to integer [Round should always be the last operation on hsp and vsp]
     hsp = round(hsp)
     vsp = round(vsp)
-} else if stamina &lt; maxStamina {
+} else if stamina &lt; maxStamina &amp;&amp; activeWeapon == undefined {
     stamina += restStaminaRegen
 
     if stamina &gt; maxStamina {
@@ -249,7 +251,7 @@ if postCollideSpeed == 0 {
 keyEnter = keyboard_check_pressed(vk_enter)
 
 // Weapon Creation and Destruction
-if activeWeapon == undefined &amp;&amp; keyEnter {
+if activeWeapon == undefined &amp;&amp; keyEnter &amp;&amp; stamina &gt;= attackStaminaDrain {
     if hsp == 0 &amp;&amp; vsp == 0 { // Jesse standing still
         // currently only attacks left, right, up, and down when standing still
         // add diagonal staning attacks once we get diagonal jesse sprites
@@ -283,6 +285,8 @@ if activeWeapon == undefined &amp;&amp; keyEnter {
 
     // Create and place weapon object
     activeWeapon = instance_create(x + xWeaponDisplacement, y + yWeaponDisplacement, equippedWeapon)
+    stamina -= attackStaminaDrain
+
     if xWeaponDisplacement != 0 {
         activeWeapon.image_xscale = sign(xWeaponDisplacement)
         activeWeapon.image_angle += (-90 * sign(yWeaponDisplacement)) * (.5 * sign(xWeaponDisplacement))
