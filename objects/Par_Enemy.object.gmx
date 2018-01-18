@@ -25,8 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_destroy()
-</string>
+            <string></string>
           </argument>
         </arguments>
       </action>
