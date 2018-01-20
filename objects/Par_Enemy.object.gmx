@@ -27,8 +27,6 @@
             <kind>1</kind>
             <string>xForce = 0
 yForce = 0
-
-forceFriction = 2
 </string>
           </argument>
         </arguments>
@@ -51,15 +49,26 @@ forceFriction = 2
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if xForce != 0 {
+            <string>if place_meeting(x + xForce, y, Par_Wall) {
+    while(!place_meeting(x + sign(xForce), y, Par_Wall)) {
+        x += sign(xForce)
+    }
+    xForce = 0
+} else {
     x += xForce
     xForce = sign(xForce) * max(abs(xForce) - forceFriction, 0)
 }
 
-if yForce != 0 {
-y += yForce
+if place_meeting(x, y + yForce, Par_Wall) {
+    while(!place_meeting(x, y + sign(yForce), Par_Wall)) {
+        y += sign(yForce)
+    }
+    yForce = 0
+} else {
+    y += yForce
     yForce = sign(yForce) * max(abs(yForce) - forceFriction, 0)
 }
+
 </string>
           </argument>
         </arguments>

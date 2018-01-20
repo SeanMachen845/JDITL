@@ -63,8 +63,14 @@ yFacingDirection = 0
             instance_destroy()
         }
     } else {
-        other.xForce = xFacingDirection * force
-        other.yForce = yFacingDirection * force
+        // add pushback force to the enemy
+        if xFacingDirection != 0 &amp;&amp; yFacingDirection != 0 {
+            other.xForce = (xFacingDirection * force) / sqrt(2)
+            other.yForce = (yFacingDirection * force) / sqrt(2)
+        } else {
+            other.xForce = xFacingDirection * force
+            other.yForce = yFacingDirection * force
+        }
     }
 }
 </string>

@@ -49,33 +49,6 @@ randomize()
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Combat
-
-activeWeapon = undefined
-equippedWeapon = Obj_Stick
-xWeaponDisplacement = 0
-yWeaponDisplacement = 0
-attackStaminaDrain = 40
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Movement and Animation
 
 // Player Variables
@@ -102,6 +75,33 @@ restStaminaRegen = 2
 staminaBarAlpha = 0
 staminaBarAlphaDrain = 1/60 // 60 frames to completely disapear
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Combat
+
+activeWeapon = undefined
+equippedWeapon = Obj_Stick
+xWeaponDisplacement = 0
+yWeaponDisplacement = 0
+attackStaminaDrain = 40
 </string>
           </argument>
         </arguments>

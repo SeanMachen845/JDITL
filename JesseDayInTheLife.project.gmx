@@ -7,7 +7,10 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprites name="Enemies">
-      <sprite>sprites\Spr_GreenSlime</sprite>
+      <sprites name="Spr_GreenSlime">
+        <sprite>sprites\Spr_GreenSlime</sprite>
+        <sprite>sprites\Spr_GreenSlimeHit</sprite>
+      </sprites>
       <sprite>sprites\Spr_PurpleSlime</sprite>
     </sprites>
     <sprites name="Jesse">

@@ -37,7 +37,8 @@ if irandom(1) == 0 {
 
 sprite_index = slimeSpriteIndex
 
-hp = 3
+hp = 6
+forceFriction = 2
 </string>
           </argument>
         </arguments>
