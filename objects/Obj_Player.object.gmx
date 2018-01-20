@@ -169,11 +169,7 @@ if mag &gt; 0 &amp;&amp; noBlockingWall {
     hsp = round(hsp)
     vsp = round(vsp)
 } else if stamina &lt; maxStamina &amp;&amp; activeWeapon == undefined {
-    stamina += restStaminaRegen
-
-    if stamina &gt; maxStamina {
-        stamina = maxStamina
-    }
+    stamina = min(stamina + restStaminaRegen, maxStamina)
 }
 
 
@@ -195,28 +191,32 @@ if place_meeting(x, y + vsp, Par_Wall) {
     y += vsp
 }
 
+// Animations
+if keyDown {
+    sprite_index = Spr_JesseDown
+    image_xscale = 1
+} else if keyUp {
+    sprite_index = Spr_JesseUp
+    image_xscale = 1
+} else if keyRight {
+    sprite_index = Spr_JesseRight
+    image_xscale = 1
+}  else if keyLeft {
+    sprite_index = Spr_JesseRight
+    image_xscale = -1
+}
+
 // Squareroot can be done later to find the Post collision speed, used for animations
 postCollideSpeed = sqrt(hsp*hsp + vsp*vsp)
-
-// Animations
-if postCollideSpeed == 0 {
+if postCollideSpeed == 0 { // idle
     image_index = 0
     image_speed = 0
     firstMove = true
-} else {
+} else { // moving
     // Advances animation by one frame on first move to prevent moonwalking
     if firstMove {
         firstMove = false
         image_index = 1
-    }
-    
-    if vsp &gt; 0 {
-        sprite_index = Spr_JesseDown
-    } else if vsp &lt; 0 {
-        sprite_index = Spr_JesseUp
-    } else {
-        sprite_index = Spr_JesseRight
-        image_xscale = sign(hsp)
     }
     
     // image_speed is in sprite frames / room frames
@@ -270,21 +270,14 @@ if activeWeapon == undefined &amp;&amp; keyEnter &amp;&amp; stamina &gt;= attack
                 break
         }
     } else { // Jesse moving
-        if hsp != 0 {
-            xWeaponDisplacement = (sprite_width/2) * sign(hsp) * sign(image_xscale)
-        } else {
-            xWeaponDisplacement = 0
-        }
-
-        if vsp != 0 {
-            yWeaponDisplacement = (sprite_height/2) * sign(vsp)
-        } else {
-            yWeaponDisplacement = 0
-        }
+        xWeaponDisplacement = (sprite_width/2) * sign(hsp) * sign(image_xscale)
+        yWeaponDisplacement = (sprite_height/2) * sign(vsp)
     }
 
     // Create and place weapon object
     activeWeapon = instance_create(x + xWeaponDisplacement, y + yWeaponDisplacement, equippedWeapon)
+    activeWeapon.xFacingDirection = sign(xWeaponDisplacement)
+    activeWeapon.yFacingDirection = sign(yWeaponDisplacement)
     stamina -= attackStaminaDrain
 
     if xWeaponDisplacement != 0 {
