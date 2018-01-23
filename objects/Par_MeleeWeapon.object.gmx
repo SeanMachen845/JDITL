@@ -5,7 +5,7 @@
   <visible>-1</visible>
   <depth>0</depth>
   <persistent>0</persistent>
-  <parentName>Par_Wall</parentName>
+  <parentName>Par_HurtEnemy</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
     <event eventtype="0" enumb="0">
@@ -25,14 +25,16 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>xForce = 0
-yForce = 0
+            <string>force = 20
+enemiesHit = undefined
+xFacingDirection = 0
+yFacingDirection = 0
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="3" enumb="0">
+    <event eventtype="4" ename="Par_Enemy">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -49,26 +51,28 @@ yForce = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if place_meeting(x + xForce, y, Par_Wall) {
-    while(!place_meeting(x + sign(xForce), y, Par_Wall)) {
-        x += sign(xForce)
-    }
-    xForce = 0
-} else {
-    x += xForce
-    xForce = sign(xForce) * max(abs(xForce) - forceFriction, 0)
-}
+            <string>if !array_contains(enemiesHit, other.id) {
+    // add hit enemy to the list of enemies hit so it is not double hit by the same swing
+    var arrayLength = array_length_1d(enemiesHit);
+    enemiesHit[arrayLength] = other.id 
 
-if place_meeting(x, y + yForce, Par_Wall) {
-    while(!place_meeting(x, y + sign(yForce), Par_Wall)) {
-        y += sign(yForce)
+    // dain hp and destroy if no hp left
+    other.hp = max(other.hp - hpDrainOnHit, 0)
+    if other.hp == 0 {
+        with other {
+            instance_destroy()
+        }
+    } else {
+        // add pushback force to the enemy
+        if xFacingDirection != 0 &amp;&amp; yFacingDirection != 0 {
+            other.xForce = (xFacingDirection * force) / sqrt(2)
+            other.yForce = (yFacingDirection * force) / sqrt(2)
+        } else {
+            other.xForce = xFacingDirection * force
+            other.yForce = yFacingDirection * force
+        }
     }
-    yForce = 0
-} else {
-    y += yForce
-    yForce = sign(yForce) * max(abs(yForce) - forceFriction, 0)
 }
-
 </string>
           </argument>
         </arguments>

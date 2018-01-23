@@ -25,7 +25,9 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var slimeSpriteIndex = Spr_GreenSlime
+            <string>event_inherited()
+
+var slimeSpriteIndex = Spr_GreenSlime
 
 if irandom(1) == 0 {
     slimeSpriteIndex = Spr_GreenSlime
@@ -34,6 +36,9 @@ if irandom(1) == 0 {
 }
 
 sprite_index = slimeSpriteIndex
+
+hp = 6
+forceFriction = 2
 </string>
           </argument>
         </arguments>

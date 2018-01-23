@@ -7,7 +7,10 @@
   <sounds name="sound"/>
   <sprites name="sprites">
     <sprites name="Enemies">
-      <sprite>sprites\Spr_GreenSlime</sprite>
+      <sprites name="Spr_GreenSlime">
+        <sprite>sprites\Spr_GreenSlime</sprite>
+        <sprite>sprites\Spr_GreenSlimeHit</sprite>
+      </sprites>
       <sprite>sprites\Spr_PurpleSlime</sprite>
     </sprites>
     <sprites name="Jesse">
@@ -29,6 +32,7 @@
     <script>scripts\pad_text_for_display.gml</script>
     <script>scripts\split_string.gml</script>
     <script>scripts\text_box_create.gml</script>
+    <script>scripts\array_contains.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\Font_PGothic</font>
@@ -42,6 +46,7 @@
       <object>objects\Par_Wall</object>
       <object>objects\Par_HurtEnemy</object>
       <object>objects\Par_Enemy</object>
+      <object>objects\Par_MeleeWeapon</object>
     </objects>
     <objects name="Weapons">
       <object>objects\Obj_Stick</object>
