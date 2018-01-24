@@ -53,6 +53,10 @@ randomize()
 
 // Player Variables
 //Movement
+xDirection = 0
+yDirection = 0
+hsp = 0
+vsp = 0
 playerSpeed = 3
 
 //Animations
@@ -124,9 +128,8 @@ attackStaminaDrain = 40
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Movement and Animations
+            <string>/// Player Inputs
 
-// Movement
 // Get Player Input
 keyLeft = keyboard_check(ord("A"))
 keyRight = keyboard_check(ord("D"))
@@ -135,8 +138,37 @@ keyDown = keyboard_check(ord("S"))
 
 keySprint = keyboard_check(vk_shift)
 
-hsp = (-1 * keyLeft) + keyRight
-vsp = (-1 * keyUp) + keyDown
+keyAttack = keyboard_check_pressed(vk_enter)
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Movement and Animations
+
+// Movement
+// calculate current direction
+xDirection = (-1 * keyLeft) + keyRight
+yDirection = (-1 * keyUp) + keyDown
+
+// calculate speed
+hsp = xDirection
+vsp = yDirection
 
 // checks to see if there is a wall blocking the player's path
 noBlockingWall = (!place_meeting(x + sign(hsp), y, Par_Wall) &amp;&amp; hsp != 0) || (!place_meeting(x, y + sign(vsp), Par_Wall) &amp;&amp; vsp != 0)
@@ -247,12 +279,9 @@ if postCollideSpeed == 0 { // idle
             <kind>1</kind>
             <string>/// Combat
 
-// Player Input
-keyEnter = keyboard_check_pressed(vk_enter)
-
 // Weapon Creation and Destruction
-if activeWeapon == undefined &amp;&amp; keyEnter &amp;&amp; stamina &gt;= attackStaminaDrain {
-    if hsp == 0 &amp;&amp; vsp == 0 { // Jesse standing still
+if activeWeapon == undefined &amp;&amp; keyAttack &amp;&amp; stamina &gt;= attackStaminaDrain {
+    if xDirection == 0 &amp;&amp; yDirection == 0 { // Jesse standing still
         // currently only attacks left, right, up, and down when standing still
         // add diagonal staning attacks once we get diagonal jesse sprites
         switch sprite_index {
@@ -270,12 +299,13 @@ if activeWeapon == undefined &amp;&amp; keyEnter &amp;&amp; stamina &gt;= attack
                 break
         }
     } else { // Jesse moving
-        xWeaponDisplacement = (sprite_width/2) * sign(hsp) * sign(image_xscale)
-        yWeaponDisplacement = (sprite_height/2) * sign(vsp)
+        xWeaponDisplacement = (sprite_width/2) * xDirection * sign(image_xscale)
+        yWeaponDisplacement = (sprite_height/2) * yDirection
     }
 
     // Create and place weapon object
     activeWeapon = instance_create(x + xWeaponDisplacement, y + yWeaponDisplacement, equippedWeapon)
+    activeWeapon.owner = self
     activeWeapon.xFacingDirection = sign(xWeaponDisplacement)
     activeWeapon.yFacingDirection = sign(yWeaponDisplacement)
     stamina -= attackStaminaDrain
@@ -285,16 +315,6 @@ if activeWeapon == undefined &amp;&amp; keyEnter &amp;&amp; stamina &gt;= attack
         activeWeapon.image_angle += (-90 * sign(yWeaponDisplacement)) * (.5 * sign(xWeaponDisplacement))
     } else {
         activeWeapon.image_angle += -90 * sign(yWeaponDisplacement)
-    }
-} else if activeWeapon != undefined {
-    with(activeWeapon) {
-        if image_index == (image_number - 1) { // Destroy weapon object on last frame of animation
-            instance_destroy()
-            other.activeWeapon = undefined
-        } else { // Move weapon object with player
-            x = other.x + other.xWeaponDisplacement
-            y = other.y + other.yWeaponDisplacement
-        }
     }
 }
 </string>
