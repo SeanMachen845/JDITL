@@ -305,6 +305,7 @@ if activeWeapon == undefined &amp;&amp; keyAttack &amp;&amp; stamina &gt;= attac
 
     // Create and place weapon object
     activeWeapon = instance_create(x + xWeaponDisplacement, y + yWeaponDisplacement, equippedWeapon)
+    activeWeapon.owner = self
     activeWeapon.xFacingDirection = sign(xWeaponDisplacement)
     activeWeapon.yFacingDirection = sign(yWeaponDisplacement)
     stamina -= attackStaminaDrain
@@ -314,16 +315,6 @@ if activeWeapon == undefined &amp;&amp; keyAttack &amp;&amp; stamina &gt;= attac
         activeWeapon.image_angle += (-90 * sign(yWeaponDisplacement)) * (.5 * sign(xWeaponDisplacement))
     } else {
         activeWeapon.image_angle += -90 * sign(yWeaponDisplacement)
-    }
-} else if activeWeapon != undefined {
-    with(activeWeapon) {
-        if image_index == (image_number - 1) { // Destroy weapon object on last frame of animation
-            instance_destroy()
-            other.activeWeapon = undefined
-        } else { // Move weapon object with player
-            x = other.x + other.xWeaponDisplacement
-            y = other.y + other.yWeaponDisplacement
-        }
     }
 }
 </string>

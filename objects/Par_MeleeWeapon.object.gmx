@@ -25,10 +25,43 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>force = 20
+            <string>owner = undefined
+
+force = 20
 enemiesHit = undefined
 xFacingDirection = 0
 yFacingDirection = 0
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Weapon Control
+
+if image_index == (image_number - 1) { // Destroy weapon object on last frame of animation
+    instance_destroy()
+    owner.activeWeapon = undefined
+} else { // Move weapon object with player
+    x = owner.x + owner.xWeaponDisplacement
+    y = owner.y + owner.yWeaponDisplacement
+}
 </string>
           </argument>
         </arguments>
@@ -51,7 +84,9 @@ yFacingDirection = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if !array_contains(enemiesHit, other.id) {
+            <string>/// Hit Enemy
+
+if !array_contains(enemiesHit, other.id) {
     // add hit enemy to the list of enemies hit so it is not double hit by the same swing
     var arrayLength = array_length_1d(enemiesHit);
     enemiesHit[arrayLength] = other.id 
@@ -72,6 +107,32 @@ yFacingDirection = 0
             other.yForce = yFacingDirection * force
         }
     }
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="Par_Wall">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if !place_meeting(x, y, Par_Enemy) {
+    instance_destroy()
+    owner.activeWeapon = undefined
 }
 </string>
           </argument>
