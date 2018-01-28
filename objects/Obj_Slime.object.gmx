@@ -27,15 +27,20 @@
             <kind>1</kind>
             <string>event_inherited()
 
-var slimeSpriteIndex = Spr_GreenSlime
+slimeColorGroupIndex = irandom(1)
 
-if irandom(1) == 0 {
-    slimeSpriteIndex = Spr_GreenSlime
-} else {
-    slimeSpriteIndex = Spr_PurpleSlime
+switch slimeColorGroupIndex {
+    case 0:
+        enemySpriteIndex = Spr_GreenSlime
+        enemyHurtSpriteIndex = Spr_GreenSlimeHit
+        break
+    default:
+        enemySpriteIndex = Spr_PurpleSlime
+        enemyHurtSpriteIndex = Spr_GreenSlimeHit // make purple slime hit later
+        break 
 }
 
-sprite_index = slimeSpriteIndex
+sprite_index = enemySpriteIndex
 
 hp = 6
 forceFriction = 2
