@@ -25,30 +25,6 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Game Start
-
-// Set random randomization seed
-randomize()
-</string>
-          </argument>
-        </arguments>
-      </action>
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
             <string>/// Movement and Animation
 
 // Player Variables
@@ -101,8 +77,8 @@ staminaBarAlphaDrain = 1/60 // 60 frames to completely disapear
             <kind>1</kind>
             <string>/// Combat
 
-activeWeapon = undefined
-equippedWeapon = Obj_Stick
+activeWeapon = undefined // Weapon currently attacking
+equippedWeapon = undefined
 xWeaponDisplacement = 0
 yWeaponDisplacement = 0
 attackStaminaDrain = 40
@@ -131,14 +107,14 @@ attackStaminaDrain = 40
             <string>/// Player Inputs
 
 // Get Player Input
-keyLeft = keyboard_check(ord("A"))
-keyRight = keyboard_check(ord("D"))
-keyUp = keyboard_check(ord("W"))
-keyDown = keyboard_check(ord("S"))
+keyLeft = keyboard_check(global.leftButton)
+keyRight = keyboard_check(global.rightButton)
+keyUp = keyboard_check(global.upButton)
+keyDown = keyboard_check(global.downButton)
 
-keySprint = keyboard_check(vk_shift)
+keySprint = keyboard_check(global.sprintButton)
 
-keyAttack = keyboard_check_pressed(vk_enter)
+keyAttack = keyboard_check_pressed(global.attackButton)
 </string>
           </argument>
         </arguments>
@@ -280,7 +256,7 @@ if postCollideSpeed == 0 { // idle
             <string>/// Combat
 
 // Weapon Creation and Destruction
-if activeWeapon == undefined &amp;&amp; keyAttack &amp;&amp; stamina &gt;= attackStaminaDrain {
+if activeWeapon == undefined &amp;&amp; equippedWeapon != undefined &amp;&amp; keyAttack &amp;&amp; stamina &gt;= attackStaminaDrain {
     if xDirection == 0 &amp;&amp; yDirection == 0 { // Jesse standing still
         // currently only attacks left, right, up, and down when standing still
         // add diagonal staning attacks once we get diagonal jesse sprites
@@ -339,7 +315,9 @@ if activeWeapon == undefined &amp;&amp; keyAttack &amp;&amp; stamina &gt;= attac
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if stamina &lt; maxStamina {
+            <string>/// Draw Stamina Bar
+
+if stamina &lt; maxStamina {
     staminaBarAlpha = 1
 } else if staminaBarAlpha &gt; 0 {
     staminaBarAlpha -= staminaBarAlphaDrain
