@@ -18,15 +18,18 @@
       <sprite>sprites\Spr_JesseRight</sprite>
       <sprite>sprites\Spr_JesseDown</sprite>
     </sprites>
+    <sprites name="NPCs">
+      <sprite>sprites\Spr_NPCPlaceholder</sprite>
+      <sprite>sprites\spr_NPCFurry</sprite>
+    </sprites>
     <sprites name="Weapons">
       <sprites name="ActiveWeapons">
-        <sprite>sprites\Spr_StickPlaceholder</sprite>
+        <sprite>sprites\Spr_StickPlaceholderAttacking</sprite>
       </sprites>
       <sprites name="PickupableWeapons">
         <sprite>sprites\Spr_StickPlaceholderPickupable</sprite>
       </sprites>
     </sprites>
-    <sprite>sprites\Spr_NPCPlaceholder</sprite>
     <sprite>sprites\Spr_TalkBox</sprite>
     <sprite>sprites\Spr_TextBox</sprite>
     <sprite>sprites\Spr_Wall</sprite>
@@ -57,10 +60,10 @@
     </objects>
     <objects name="Weapons">
       <objects name="ActiveWeapons">
-        <object>objects\Obj_Stick</object>
+        <object>objects\Obj_StickAttacking</object>
       </objects>
       <objects name="PickupableWeapons">
-        <object>objects\Obj_StickPickupable</object>
+        <object>objects\Obj_Stick</object>
       </objects>
     </objects>
     <object>objects\Obj_NPCPlaceholder</object>

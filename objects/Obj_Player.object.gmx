@@ -165,11 +165,7 @@ if mag &gt; 0 &amp;&amp; noBlockingWall {
         
         // do not gain stamina if stamina is full or currently attacking
         if stamina &lt; maxStamina &amp;&amp; activeWeapon == undefined {
-            stamina += walkStaminaRegen
-            
-            if stamina &gt; maxStamina {
-                stamina = maxStamina
-            }
+            stamina = min(stamina + walkStaminaRegen, maxStamina)
         }
     }
 
@@ -280,6 +276,11 @@ if activeWeapon == undefined &amp;&amp; equippedWeapon != undefined &amp;&amp; k
     }
 
     // Create and place weapon object
+    if xWeaponDisplacement != 0 &amp;&amp; yWeaponDisplacement != 0 {
+        xWeaponDisplacement = round(xWeaponDisplacement / sqrt(2))
+        yWeaponDisplacement = round(yWeaponDisplacement / sqrt(2))
+    }
+    
     activeWeapon = instance_create(x + xWeaponDisplacement, y + yWeaponDisplacement, equippedWeapon)
     activeWeapon.owner = self
     activeWeapon.xFacingDirection = sign(xWeaponDisplacement)
