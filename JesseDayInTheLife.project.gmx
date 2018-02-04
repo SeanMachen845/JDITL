@@ -18,13 +18,21 @@
       <sprite>sprites\Spr_JesseRight</sprite>
       <sprite>sprites\Spr_JesseDown</sprite>
     </sprites>
-    <sprites name="Weapons">
-      <sprite>sprites\Spr_StickPlaceholder</sprite>
+    <sprites name="NPCs">
+      <sprite>sprites\Spr_NPCPlaceholder</sprite>
+      <sprite>sprites\spr_NPCFurry</sprite>
     </sprites>
-    <sprite>sprites\Spr_Wall</sprite>
+    <sprites name="Weapons">
+      <sprites name="ActiveWeapons">
+        <sprite>sprites\Spr_StickPlaceholderAttacking</sprite>
+      </sprites>
+      <sprites name="PickupableWeapons">
+        <sprite>sprites\Spr_StickPlaceholderPickupable</sprite>
+      </sprites>
+    </sprites>
     <sprite>sprites\Spr_TalkBox</sprite>
     <sprite>sprites\Spr_TextBox</sprite>
-    <sprite>sprites\Spr_NPCPlaceholder</sprite>
+    <sprite>sprites\Spr_Wall</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -38,25 +46,33 @@
     <font>fonts\Font_PGothic</font>
   </fonts>
   <objects name="objects">
+    <object>objects\Init_GameStart</object>
     <objects name="Enemies">
       <object>objects\Obj_Slime</object>
     </objects>
     <objects name="Parents">
+      <object>objects\Par_Enemy</object>
+      <object>objects\Par_HurtEnemy</object>
+      <object>objects\Par_MeleeWeapon</object>
       <object>objects\Par_TextBoxSpawner</object>
       <object>objects\Par_Wall</object>
-      <object>objects\Par_HurtEnemy</object>
-      <object>objects\Par_Enemy</object>
-      <object>objects\Par_MeleeWeapon</object>
+      <object>objects\Par_WeaponPickupable</object>
     </objects>
     <objects name="Weapons">
-      <object>objects\Obj_Stick</object>
+      <objects name="ActiveWeapons">
+        <object>objects\Obj_StickAttacking</object>
+      </objects>
+      <objects name="PickupableWeapons">
+        <object>objects\Obj_Stick</object>
+      </objects>
     </objects>
-    <object>objects\Obj_Player</object>
-    <object>objects\Obj_Wall</object>
-    <object>objects\Obj_TextBox</object>
     <object>objects\Obj_NPCPlaceholder</object>
+    <object>objects\Obj_Player</object>
+    <object>objects\Obj_TextBox</object>
+    <object>objects\Obj_Wall</object>
   </objects>
   <rooms name="rooms">
+    <room>rooms\Room_Init</room>
     <room>rooms\Room_Test</room>
   </rooms>
   <help>
