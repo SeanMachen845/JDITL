@@ -78,10 +78,39 @@ staminaBarAlphaDrain = 1/60 // 60 frames to completely disapear
             <string>/// Combat
 
 activeWeapon = undefined // Weapon currently attacking
-equippedWeapon = undefined
+equippedWeaponAttacking = undefined
+equippedWeaponThrowing = undefined
 xWeaponDisplacement = 0
 yWeaponDisplacement = 0
 attackStaminaDrain = 40
+throwStaminaDrain = 60
+throwLag = 15 // Lag for x frames until able to attack again after throwing
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Clear active weapon
+
+activeWeapon = undefined
+
 </string>
           </argument>
         </arguments>
@@ -115,6 +144,7 @@ keyDown = keyboard_check(global.downButton)
 keySprint = keyboard_check(global.sprintButton)
 
 keyAttack = keyboard_check_pressed(global.attackButton)
+keyThrow = keyboard_check_pressed(global.throwButton)
 </string>
           </argument>
         </arguments>
@@ -252,7 +282,9 @@ if postCollideSpeed == 0 { // idle
             <string>/// Combat
 
 // Weapon Creation and Destruction
-if activeWeapon == undefined &amp;&amp; equippedWeapon != undefined &amp;&amp; keyAttack &amp;&amp; stamina &gt;= attackStaminaDrain {
+if activeWeapon == undefined &amp;&amp; (equippedWeaponAttacking != undefined &amp;&amp; (keyAttack &amp;&amp; stamina &gt;= attackStaminaDrain) || 
+        (equippedWeaponThrowing &amp;&amp; keyThrow &amp;&amp; stamina &gt;= throwStaminaDrain)) {
+
     if xDirection == 0 &amp;&amp; yDirection == 0 { // Jesse standing still
         // currently only attacks left, right, up, and down when standing still
         // add diagonal staning attacks once we get diagonal jesse sprites
@@ -281,11 +313,22 @@ if activeWeapon == undefined &amp;&amp; equippedWeapon != undefined &amp;&amp; k
         yWeaponDisplacement = round(yWeaponDisplacement / sqrt(2))
     }
     
-    activeWeapon = instance_create(x + xWeaponDisplacement, y + yWeaponDisplacement, equippedWeapon)
+    if keyThrow &amp;&amp; stamina &gt;= throwStaminaDrain { // Prioratize throwing
+        // Throw
+        activeWeapon = instance_create(x + xWeaponDisplacement, y + yWeaponDisplacement, equippedWeaponThrowing)
+        
+        stamina -= throwStaminaDrain
+        alarm[0] = throwLag
+    } else {
+        // Swing
+        activeWeapon = instance_create(x + xWeaponDisplacement, y + yWeaponDisplacement, equippedWeaponAttacking)
+        
+        stamina -= attackStaminaDrain
+    } 
+    
     activeWeapon.owner = self
     activeWeapon.xFacingDirection = sign(xWeaponDisplacement)
     activeWeapon.yFacingDirection = sign(yWeaponDisplacement)
-    stamina -= attackStaminaDrain
 
     if xWeaponDisplacement != 0 {
         activeWeapon.image_xscale = sign(xWeaponDisplacement)

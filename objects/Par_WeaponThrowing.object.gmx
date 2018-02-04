@@ -27,7 +27,11 @@
             <kind>1</kind>
             <string>owner = undefined
 
-force = 20 // used to calculate knockback
+// Movement speed of throwing weapon
+throwSpeed = 12
+rotation = 10 + random(8) // Degrees to spin per frame
+
+force = 14 // Used to calculate knockback
 enemiesHit = undefined
 xFacingDirection = 0
 yFacingDirection = 0
@@ -53,15 +57,17 @@ yFacingDirection = 0
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Weapon Control
+            <string>/// Weapon Movement
 
-if image_index == (image_number - 1) { // Destroy weapon object on last frame of animation
-    instance_destroy()
-    owner.activeWeapon = undefined
-} else { // Move weapon object with player
-    x = owner.x + owner.xWeaponDisplacement
-    y = owner.y + owner.yWeaponDisplacement
+if xFacingDirection != 0 &amp;&amp; yFacingDirection != 0 {
+    x += (throwSpeed * xFacingDirection) / sqrt(2)
+    y += (throwSpeed * yFacingDirection) / sqrt(2)
+} else {
+    x += throwSpeed * xFacingDirection
+    y += throwSpeed * yFacingDirection
 }
+image_angle += rotation
+
 </string>
           </argument>
         </arguments>
@@ -84,10 +90,12 @@ if image_index == (image_number - 1) { // Destroy weapon object on last frame of
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if !place_meeting(x, y, Par_Enemy) {
-    instance_destroy()
-    owner.activeWeapon = undefined
-}
+            <string>/// Get Logged in Wall
+
+pickupObject = instance_create(x, y, pickupableCounterpart)
+pickupObject.image_angle = image_angle
+    
+instance_destroy()
 </string>
           </argument>
         </arguments>

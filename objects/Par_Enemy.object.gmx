@@ -181,7 +181,7 @@ if place_meeting(x, y + yForce, Par_Wall) {
 
 blinking = true
 alarm[0] = room_speed * 0.8 // 0.8 seconds of blink
-alarm[2] = blinkTransitionSpeed
+alarm[2] = blinkTransitionSpeed / 2
 </string>
           </argument>
         </arguments>

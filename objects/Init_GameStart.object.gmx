@@ -40,6 +40,7 @@ global.sprintButton = vk_shift
 global.interactButton = ord("E")
 
 global.attackButton = vk_enter
+global.throwButton = ord("Q")
 
 room_goto(Room_Test) // go to first room
 
