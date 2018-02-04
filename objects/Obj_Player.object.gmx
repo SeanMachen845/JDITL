@@ -176,8 +176,9 @@ yDirection = (-1 * keyUp) + keyDown
 hsp = xDirection
 vsp = yDirection
 
-// checks to see if there is a wall blocking the player's path
-noBlockingWall = (!place_meeting(x + sign(hsp), y, Par_Wall) &amp;&amp; hsp != 0) || (!place_meeting(x, y + sign(vsp), Par_Wall) &amp;&amp; vsp != 0)
+// checks to see if there is a wall, or Enemy, blocking the player's path
+noBlockingWall = (!place_meeting(x + sign(hsp), y, Par_Wall) &amp;&amp; !place_meeting(x + sign(hsp), y, Par_Enemy) &amp;&amp; hsp != 0) || 
+                (!place_meeting(x, y + sign(vsp), Par_Wall) &amp;&amp; !place_meeting(x, y + sign(vsp), Par_Enemy) &amp;&amp; vsp != 0)
 mag = sqrt(hsp*hsp + vsp*vsp)
 if mag &gt; 0 &amp;&amp; noBlockingWall {
     // Normalize direction and form velocity vector
@@ -207,8 +208,8 @@ if mag &gt; 0 &amp;&amp; noBlockingWall {
 }
 
 
-if place_meeting(x + hsp, y, Par_Wall) {
-    while(!place_meeting(x + sign(hsp), y, Par_Wall)) {
+if place_meeting(x + hsp, y, Par_Wall) || place_meeting(x + hsp, y, Par_Enemy) {
+    while(!place_meeting(x + sign(hsp), y, Par_Wall) &amp;&amp; !place_meeting(x + sign(hsp), y, Par_Enemy)) {
         x += sign(hsp)
     }
     hsp = 0
@@ -216,8 +217,8 @@ if place_meeting(x + hsp, y, Par_Wall) {
     x += hsp
 }
 
-if place_meeting(x, y + vsp, Par_Wall) {
-    while(!place_meeting(x, y + sign(vsp), Par_Wall)) {
+if place_meeting(x, y + vsp, Par_Wall)  || place_meeting(x, y + vsp, Par_Enemy) {
+    while(!place_meeting(x, y + sign(vsp), Par_Wall) &amp;&amp; !place_meeting(x, y + sign(vsp), Par_Enemy)) {
         y += sign(vsp)
     }
     vsp = 0
@@ -316,6 +317,9 @@ if activeWeapon == undefined &amp;&amp; (equippedWeaponAttacking != undefined &a
     if keyThrow &amp;&amp; stamina &gt;= throwStaminaDrain { // Prioratize throwing
         // Throw
         activeWeapon = instance_create(x + xWeaponDisplacement, y + yWeaponDisplacement, equippedWeaponThrowing)
+        
+        equippedWeaponAttacking = undefined
+        equippedWeaponThrowing = undefined
         
         stamina -= throwStaminaDrain
         alarm[0] = throwLag

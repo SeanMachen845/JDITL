@@ -84,10 +84,10 @@ if image_index == (image_number - 1) { // Destroy weapon object on last frame of
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if !place_meeting(x, y, Par_Enemy) {
-    instance_destroy()
-    owner.activeWeapon = undefined
-}
+            <string>/// Clang on Wall
+
+instance_destroy()
+owner.activeWeapon = undefined
 </string>
           </argument>
         </arguments>
