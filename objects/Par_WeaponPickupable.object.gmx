@@ -31,7 +31,8 @@ if keyboard_check_pressed(global.interactButton) &amp;&amp; place_meeting(x, y, 
     var playerObject = instance_find(Obj_Player, 0) // Get first instance of Obj_Player (should only be 1 at all times)
     
     with(playerObject) {
-        equippedWeapon = other.activeCounterpart
+        equippedWeaponAttacking = other.attackingCounterpart
+        equippedWeaponThrowing = other.throwingCounterpart
     }
     
     instance_destroy()

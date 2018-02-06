@@ -26,7 +26,7 @@
       <sprites name="ActiveWeapons">
         <sprite>sprites\Spr_StickPlaceholderAttacking</sprite>
       </sprites>
-      <sprites name="PickupableWeapons">
+      <sprites name="StaticWeapons">
         <sprite>sprites\Spr_StickPlaceholderPickupable</sprite>
       </sprites>
     </sprites>
@@ -57,13 +57,13 @@
       <object>objects\Par_TextBoxSpawner</object>
       <object>objects\Par_Wall</object>
       <object>objects\Par_WeaponPickupable</object>
+      <object>objects\Par_WeaponThrowing</object>
     </objects>
     <objects name="Weapons">
-      <objects name="ActiveWeapons">
+      <objects name="Obj_Stick">
         <object>objects\Obj_StickAttacking</object>
-      </objects>
-      <objects name="PickupableWeapons">
-        <object>objects\Obj_Stick</object>
+        <object>objects\Obj_StickPickupable</object>
+        <object>objects\Obj_StickThrowing</object>
       </objects>
     </objects>
     <object>objects\Obj_NPCPlaceholder</object>
